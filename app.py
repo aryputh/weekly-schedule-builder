@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.time_utils import get_time_from_inputs
+from utils.time_utils import *
 
 # App config
 st.set_page_config(page_title = "Weekly Schedule Builder", layout = "wide")
@@ -81,16 +81,19 @@ with st.form("event_form", clear_on_submit = False):
                     "day" : day,
                     "start_time" : str(start_time),
                     "end_time" : str(end_time),
-                    "color" : color
+                    "color" : color,
                 }
                 st.session_state["events"].append(event)
 
             st.success(f"Event '{title}' added to: {', '.join(selected_days)}")
 
             # Clear fields on success
-            st.session_state["event_title"] = ""
-            st.session_state["event_description"] = ""
-            st.session_state["event_days"] = []
+            st.session_state.update({
+                "event_title": "",
+                "event_description": "",
+                "event_days": [],
+            })
+            st.experimental_rerun()
 
 # Display saved events (for now)
 st.subheader("Current Events")
