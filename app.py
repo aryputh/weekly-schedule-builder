@@ -43,7 +43,7 @@ visible_days = [day for day, selected in st.session_state.day_toggles.items() if
 
 # Tracks previous visible days
 if "prev_visible_days" not in st.session_state:
-    st.session_state["event_days"] = visible_days.copy()
+    st.session_state.prev_visible_days = visible_days.copy()
 
 # Update event_days if visible_days has changed
 if st.session_state.prev_visible_days != visible_days:
