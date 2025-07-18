@@ -95,8 +95,8 @@ with st.form("event_form", clear_on_submit = False):
                     "title" : title,
                     "description" : description,
                     "day" : day,
-                    "start_time" : str(start_time),
-                    "end_time" : str(end_time),
+                    "start_time" : start_time.strftime("%H:%M"),
+                    "end_time" : end_time.strftime("%H:%M"),
                     "color" : color,
                 }
                 st.session_state["events"].append(event)
