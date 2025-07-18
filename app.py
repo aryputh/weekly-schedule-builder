@@ -58,7 +58,7 @@ if start_hour >= end_hour:
     st.sidebar.error("Start time must be before end time.")
 
 # Render the form
-with st.expander("➕ Add New Event", expanded = False):
+with st.expander("+ Add New Event", expanded = False):
     ef.render_event_form(
         time_format = time_format,
         start_hour = start_hour,
