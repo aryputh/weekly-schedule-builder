@@ -51,8 +51,7 @@
 
 .event {
     position: absolute;
-    top: 4px;
-    bottom: 4px;
+    all: 4px;
     border-radius: 4px;
     color: #FFFFFF;
     font-size: 13px;
