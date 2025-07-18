@@ -36,9 +36,17 @@ cols = st.sidebar.columns(2)
 
 for i, day in enumerate(days_options):
     col = cols[i % len(cols)]
-    st.session_state.day_toggles[day] = col.checkbox(day, value = st.session_state.day_toggles.get(day, False))
+    st.session_state.day_toggles[day] = col.toggle(day, value = st.session_state.day_toggles.get(day, False))
 
 visible_days = [day for day, selected in st.session_state.day_toggles.items() if selected]
+
+# Clean up selected event days
+if "event_days" not in st.session_state:
+    st.session_state["event_days"] = []
+elif st.session_state["event_days"]:
+    st.session_state["event_days"] = [
+        day for day in st.session_state["event_days"] if day in visible_days
+    ]
 
 # Time format selection
 st.sidebar.subheader("Time Settings")
@@ -59,14 +67,6 @@ form_keys = ["event_title", "event_description", "event_days"]
 for key in form_keys:
     if key not in st.session_state:
         st.session_state[key] = "" if key != "event_days" else []
-
-# Clean up selected event days
-if "event_days" not in st.session_state:
-    st.session_state["event_days"] = []
-elif st.session_state["event_days"]:
-    st.session_state["event_days"] = [
-        day for day in st.session_state["event_days"] if day in visible_days
-    ]
 
 with st.form("event_form", clear_on_submit = False):
     col1, col2 = st.columns(2)
