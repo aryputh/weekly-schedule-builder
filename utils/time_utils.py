@@ -1,6 +1,9 @@
 from datetime import time
 
 def get_time_from_inputs(container, label, default_hour, time_format, key_prefix):
+    """
+    Render hour + AM/PM (if 12-hour) side by side, return datetime.time object.
+    """
     if time_format == "12-hour":
         # Convert 24h to 12h + meridiem
         if default_hour == 0:
@@ -16,11 +19,12 @@ def get_time_from_inputs(container, label, default_hour, time_format, key_prefix
             default_12 = default_hour - 12
             default_meridiem = "PM"
 
-        hour = container.number_input(
+        col1, col2 = container.columns([1, 1.2])
+        hour = col1.number_input(
             f"{label} Hour (1-12)", min_value = 1, max_value = 12, value = default_12, key = f"{key_prefix}_hour"
         )
-        meridiem = container.radio(
-            f"{label} AM/PM", options = ["AM", "PM"], index = 0 if default_meridiem == "AM" else 1, key = f"{key_prefix}_ampm"
+        meridiem = col2.radio(
+            f"{label} AM/PM", options = ["AM", "PM"], index = 0 if default_meridiem == "AM" else 1, key = f"{key_prefix}_ampm", horizontal = True, label_visibility = "collapsed"
             )
 
         if meridiem == "AM" and hour == 12:
