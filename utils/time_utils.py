@@ -16,10 +16,10 @@ def get_time_from_inputs(container, label, default_hour, time_format, key_prefix
             default_12 = default_hour - 12
             default_meridiem = "PM"
 
-        hour = container.sidebar.number_input(
+        hour = container.number_input(
             f"{label} Hour (1-12)", min_value = 1, max_value = 12, value = default_12, key = f"{key_prefix}_hour"
         )
-        meridiem = container.sidebar.radio(
+        meridiem = container.radio(
             f"{label} AM/PM", options = ["AM", "PM"], index = 0 if default_meridiem == "AM" else 1, key = f"{key_prefix}_ampm"
             )
 
@@ -30,7 +30,7 @@ def get_time_from_inputs(container, label, default_hour, time_format, key_prefix
         else:
             conv_hour = hour
     else:
-        conv_hour = container.sidebar.number_input(
+        conv_hour = container.number_input(
             f"{label} Hour (0-23)", min_value = 0, max_value = 23, value = default_hour, key = f"{key_prefix}_hour"
         )
     return time(conv_hour, 0)
