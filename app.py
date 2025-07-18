@@ -31,7 +31,7 @@ with st.form("event_form", clear_on_submit = True):
 
     with col1:
         title = st.text_input("Event Title")
-        description = st.text_input("Description", height = 100)
+        description = st.text_area("Description", height = 100)
         day = st.selectbox("Day", options = visible_days)
 
     with col2:
