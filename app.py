@@ -40,7 +40,15 @@ for i, day in enumerate(days_options):
     st.session_state.day_toggles[day] = col.toggle(day, value = st.session_state.day_toggles.get(day, False))
 
 visible_days = [day for day, selected in st.session_state.day_toggles.items() if selected]
-st.session_state["event_days"] = visible_days.copy()
+
+# Tracks previous visible days
+if "prev_visible_days" not in st.session_state:
+    st.session_state["event_days"] = visible_days.copy()
+
+# Update event_days if visible_days has changed
+if st.session_state.prev_visible_days != visible_days:
+    st.session_state["event_days"] = visible_days.copy()
+    st.session_state.prev_visible_days = visible_days.copy()
 
 # Time format selection
 st.sidebar.subheader("Time Settings")
@@ -106,8 +114,12 @@ with st.form("event_form", clear_on_submit = False):
 # Display saved events (for now)
 st.subheader("Weekly Calendar View")
 
+filtered_events = [
+    e for e in st.session_state["events"] if e["day"] in visible_days
+]
+
 calendar_html = rc.render_calendar(
-    events = st.session_state["events"],
+    events = filtered_events,
     visible_days = visible_days,
     start_hour = start_hour,
     end_hour = end_hour,
