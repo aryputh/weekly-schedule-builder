@@ -13,12 +13,13 @@
 
 .time-label {
     text-align: right;
-    display: grid;
-    align-items: center;
+    /* display: grid;
+    align-items: center; */
     padding: 2px 8px;
     box-sizing: border-box;
     font-size: 12px;
     height: 60px;
+    border-top: 1px solid #EEEEEE;
     border-bottom: 1px solid #EEEEEE;
 }
 
