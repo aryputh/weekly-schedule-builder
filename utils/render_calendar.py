@@ -1,9 +1,8 @@
 from datetime import datetime
 
 def render_calendar(events, visible_days, start_hour, end_hour, time_format):
-    total_hours = end_hour.hour - start_hour.hour
     hour_height_px = 60
-    column_width = f"{100 / len(visible_days)}"
+    column_width = f"{100 / len(visible_days)}%"
 
     # Generate time labels (left sidebar)
     time_labels_html = ""
@@ -21,7 +20,7 @@ def render_calendar(events, visible_days, start_hour, end_hour, time_format):
         for event in day_events:
             start_time = datetime.strptime(event["start_time"], "%H:%M")
             end_time = datetime.strptime(event["end_time"], "%H:%M")
-            start_offset = (start_hour.hour + start_time.minute / 60) - start_hour.hour
+            start_offset = (start_time.hour + start_time.minute / 60) - start_hour.hour
             duration = (end_time - start_time).seconds / 3600
 
             top_px = start_offset * hour_height_px
