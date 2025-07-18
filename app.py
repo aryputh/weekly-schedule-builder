@@ -48,6 +48,7 @@ with st.form("event_form", clear_on_submit = True):
             event = {
                 "title" : title,
                 "description" : description,
+                "day" : day,
                 "start_time" : str(start_time),
                 "end_time" : str(end_time),
                 "color" : color
