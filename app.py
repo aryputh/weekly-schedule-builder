@@ -36,7 +36,7 @@ cols = st.sidebar.columns(2)
 
 for i, day in enumerate(days_options):
     col = cols[i % len(cols)]
-    st.session_state.day_toggles[day] = col.checkbox(day, value = st.session_state.day_toggles[day])
+    st.session_state.day_toggles[day] = col.checkbox(day, value = st.session_state.day_toggles[day, False])
 
 visible_days = [day for day, selected in st.session_state.day_toggles.items() if selected]
 
