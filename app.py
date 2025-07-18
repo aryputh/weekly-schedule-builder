@@ -66,9 +66,7 @@ with st.expander("Add New Event", expanded = True):
         days_options = days_options
     )
 
-# Display saved events
-st.subheader("Weekly Calendar View")
-
+# Display calendar
 filtered_events = [
     e for e in st.session_state["events"] if e["day"] in visible_days
 ]
