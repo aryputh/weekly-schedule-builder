@@ -13,8 +13,8 @@
 
 .time-label {
     text-align: right;
-    display: flex;
-    vertical-align: middle;
+    display: grid;
+    align-items: center;
     padding: 2px 8px;
     box-sizing: border-box;
     font-size: 12px;
