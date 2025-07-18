@@ -1,5 +1,6 @@
 import streamlit as st
 import utils.time_utils as tu
+import utils.render_calendar as rc
 
 # App config
 st.set_page_config(page_title = "Weekly Schedule Builder", layout = "wide")
@@ -103,13 +104,21 @@ with st.form("event_form", clear_on_submit = False):
             st.success(f"Event '{title}' added to: {', '.join(selected_days)}")
 
 # Display saved events (for now)
-st.subheader("Current Events")
+st.subheader("Weekly Calendar View")
 
-if not st.session_state["events"]:
-    st.info("No events added yet.")
-else:
-    for event in st.session_state["events"]:
-        with st.expander(f"{event['title']} ({event['day']})"):
-            st.markdown(f"- **Time**: {event['start_time']} to {event['end_time']}")
-            st.markdown(f"- **Description**: {event['description']}")
-            st.markdown(f"- **Color**: '{event['color']}'")
+calendar_html = rc.render_calendar(
+    events = st.session_state["events"],
+    visible_days = visible_days,
+    start_hour = start_hour,
+    end_hour = end_hour,
+    time_format = time_format
+)
+
+# Inject calendar style and style
+with open("assets/style.css") as f:
+    st.markdown(
+        f"<style>{f.read()}</style>",
+        unsafe_allow_html = True
+    )
+
+st.markdown(calendar_html, unsafe_allow_html = True)
