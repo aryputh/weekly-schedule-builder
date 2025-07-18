@@ -30,7 +30,7 @@ days_options = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
 
 # Initialize day selection toggles
 if "day_toggles" not in st.session_state:
-    st.session_state.day_toggles = {day: day in ["MON", "TUE", "WED", "THU", "FRI"] for day in days_options}
+    st.session_state.day_toggles = {day: True for day in days_options}
 
 st.sidebar.subheader("Day Settings")
 cols = st.sidebar.columns(2)
