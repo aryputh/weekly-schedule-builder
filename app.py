@@ -3,7 +3,11 @@ import utils.time_utils as tu
 import utils.render_calendar as rc
 
 # App config
-st.set_page_config(page_title = "Weekly Schedule Builder", layout = "wide")
+st.set_page_config(
+    page_title = "Weekly Schedule Builder",
+    page_icon=":material/calendar_today:",
+    layout = "wide"
+    )
 st.title("Weekly Schedule Builder")
 
 # Set minimum sidebar width
