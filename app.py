@@ -57,6 +57,7 @@ end_hour = tu.get_time_from_inputs(st.sidebar, "End", 18, time_format, "end", Fa
 if start_hour >= end_hour:
     st.sidebar.error("Start time must be before end time.")
 
+# Render the form
 ef.render_event_form(
     time_format = time_format,
     start_hour = start_hour,
