@@ -45,8 +45,8 @@ st.sidebar.subheader("Time Settings")
 time_format = st.sidebar.radio("Time Format", ["12-hour", "24-hour"])
 
 # Let user select times using time input
-start_hour = get_time_from_inputs(st.sidebar, "Start", 8, time_format, "start")
-end_hour = get_time_from_inputs(st.sidebar, "End", 18, time_format, "end")
+start_hour = get_time_from_inputs(st.sidebar, "Start", 8, time_format, "start", False)
+end_hour = get_time_from_inputs(st.sidebar, "End", 18, time_format, "end", False)
 
 if start_hour >= end_hour:
     st.sidebar.error("Start time must be before end time.")
@@ -69,8 +69,8 @@ with st.form("event_form", clear_on_submit = False):
         selected_days = st.multiselect("Days *", options = visible_days, default = st.session_state["event_days"], key = "event_days")
 
     with col2:
-        start_time = get_time_from_inputs(col2, "Start Time *", start_hour.hour, time_format, "event_start")
-        end_time = get_time_from_inputs(col2, "End Time *", end_hour.hour, time_format, "event_end")
+        start_time = get_time_from_inputs(col2, "Start Time", start_hour.hour, time_format, "event_start", True)
+        end_time = get_time_from_inputs(col2, "End Time", end_hour.hour, time_format, "event_end", True)
         color = st.color_picker("Color *", "#FF5733")
 
     submitted = st.form_submit_button("Add Event")
