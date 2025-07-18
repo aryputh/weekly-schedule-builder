@@ -1,4 +1,55 @@
 from datetime import datetime
 
 def render_calendar(events, visible_days, start_hour, end_hour, time_format):
-    return
+    total_hours = end_hour.hour - start_hour.hour
+    hour_height_px = 60
+    column_width = f"{100 / len(visible_days)}"
+
+    # Generate time labels (left sidebar)
+    time_labels_html = ""
+    for h in range(start_hour.hour, end_hour.hour + 1):
+        label = datetime.strptime(str(h), "%H").strftime("%I %p" if time_format == "12-hour" else "%H:00")
+        time_labels_html += f'<div class = "time-label" style = "height: {hour_height_px}px">{label}</div>'
+    
+    # Generate grid columns for days
+    day_columns_html = ""
+    for day in visible_days:
+        day_events = [e for e in events if e["day"] == day]
+        events_html = ""
+
+        # Place each event in absolutely positioned block
+        for event in day_events:
+            start_time = datetime.strptime(event["start_time"], "%H:%M")
+            end_time = datetime.strptime(event["end_time"], "%H:%M")
+            start_offset = (start_hour.hour + start_time.minute / 60) - start_hour.hour
+            duration = (end_time - start_time).seconds / 3600
+
+            top_px = start_offset * hour_height_px
+            height_px = duration * hour_height_px
+
+            events_html += f"""
+            <div class = "event" style = "
+                top: {top_px}px;
+                height: {height_px}px;
+                background-color: {event['color']};
+            ">
+                <div class = "event_title">{event['title']}</div>
+            </div>
+            """
+
+        day_columns_html += f"""
+        <div class = "day-column" style = "width: {column_width};">
+            <div class = "day-header">{day}</div>
+            <div class = "day-body">{events_html}</div>
+        </div>
+        """
+
+    # Combine everything into one grid
+    calendar_html = f"""
+    <div class = "calendar-container">
+        <div class = "time-column">{time_labels_html}</div>
+        <div class = "days-container">{day_columns_html}</div>
+    </div>
+    """
+
+    return calendar_html
