@@ -8,7 +8,13 @@ def render_calendar(events, visible_days, start_hour, end_hour, time_format):
     # Generate time labels (left sidebar)
     time_labels_html = ""
     for h in range(start_hour.hour, end_hour.hour + 1):
-        label = datetime.strptime(str(h), "%H").strftime("%I %p" if time_format == "12-hour" else "%H:00")
+        raw_label = datetime.strptime(str(h), "%H")
+
+        if time_format == "12-hour":
+            label = raw_label.strftime("%I %p").lstrip("0")
+        else:
+            label = raw_label.strftime("%H:00")
+
         time_labels_html += f'<div class = "time-label" style = "height: {hour_height_px}px">{label}</div>'
     
     # Generate grid columns for days
