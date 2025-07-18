@@ -1,0 +1,55 @@
+.calendar-container {
+    display: flex;
+    border: 1px solid #DDDDDD;
+    font-family: sans-serif;
+}
+
+.time-column {
+    width: 60px;
+    border-right: 1px solid #CCCCCC;
+    background: #F8F8F8;
+}
+
+.time-label {
+    text-align: right;
+    padding: 2px 8px;
+    box-sizing: border-box;
+    font-size: 12px;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.days-container {
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+}
+
+.day-column {
+    position: relative;
+    border-right: 1px solid #CCCCCC;
+}
+
+.day-header {
+    text-align: center;
+    font-weight: bold;
+    background: #F0F0F0;
+    padding: 4px 0;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.day-body {
+    position: relative;
+    height: 100%;
+}
+
+.event {
+    position: relative;
+    left: 2px;
+    right: 2px;
+    border-radius: 4px;
+    color: #FFFFFF;
+    font-size: 12px;
+    padding: 2px 4px;
+    overflow: hidden;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}

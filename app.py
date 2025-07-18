@@ -43,7 +43,7 @@ st.session_state["event_days"] = visible_days.copy()
 
 # Time format selection
 st.sidebar.subheader("Time Settings")
-time_format = st.sidebar.radio("Time Format", ["12-hour", "24-hour"])
+time_format = st.sidebar.radio("Time Format", ["12-hour", "24-hour"], horizontal = True)
 
 # Let user select times using time input
 start_hour = get_time_from_inputs(st.sidebar, "Start", 8, time_format, "start", False)
