@@ -19,21 +19,12 @@ days_options = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
 if "day_toggles" not in st.session_state:
     st.session_state.day_toggles = {day: day in ["MON", "TUE", "WED", "THU", "FRI"] for day in days_options}
 
-# Chunk list into N-sized parts
-def chunk(lst, n):
-    return [lst[i:i + n] for i in range(0, len(lst), n)]
-
 st.sidebar.subheader("Visible Days")
-days_per_row = 2
-cols = st.sidebar.columns(len(days_options))
+cols = st.sidebar.columns(2)
 
-day_chunks = chunk(days_options, days_per_row)
-
-for row in day_chunks:
-    cols = st.sidebar.columns(len(row))
-    for i, day in enumerate(row):
-        if cols[i].button(day, use_container_width = True):
-            st.session_state.day_toggles[day] = not st.session_state.day_toggles[day]
+for i, day in enumerate(days_options):
+    col = cols[i % len(cols)]
+    st.session_state.day_toggles[day] = col.checkbox(day, value = st.session_state.day_toggles[day])
 
 visible_days = [day for day, selected in st.session_state.day_toggles.items() if selected]
 
