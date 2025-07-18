@@ -67,4 +67,4 @@ else:
         with st.expander(f"{event['title']} ({event['day']})"):
             st.markdown(f"- **Time**: {event['start_time']} to {event['end_time']}")
             st.markdown(f"- **Description**: {event['description']}")
-            st.markdown(f"- **Color**: '{event['color']}")
+            st.markdown(f"- **Color**: '{event['color']}'")
