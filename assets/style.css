@@ -16,7 +16,7 @@
     padding: 2px 8px;
     box-sizing: border-box;
     font-size: 13px;
-    height: 60px;
+    height: 60px; /* Fallback value */
     border-top: 1px solid #EEEEEE;
     border-bottom: 1px solid #EEEEEE;
 }
@@ -53,8 +53,6 @@
     position: absolute;
     left: 4px;
     right: 4px;
-    top: 0;
-    height: auto;
     border-radius: 4px;
     color: #FFFFFF;
     font-size: 13px;
