@@ -58,12 +58,13 @@ if start_hour >= end_hour:
     st.sidebar.error("Start time must be before end time.")
 
 # Render the form
-ef.render_event_form(
-    time_format = time_format,
-    start_hour = start_hour,
-    end_hour = end_hour,
-    days_options = days_options
-)
+with st.expander("Add New Event", expanded = True):
+    ef.render_event_form(
+        time_format = time_format,
+        start_hour = start_hour,
+        end_hour = end_hour,
+        days_options = days_options
+    )
 
 # Display saved events
 st.subheader("Weekly Calendar View")

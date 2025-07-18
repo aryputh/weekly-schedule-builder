@@ -8,8 +8,6 @@ COLOR_PALETTE = [
 ]
 
 def render_event_form(time_format, start_hour, end_hour, days_options):
-    st.subheader("Add a New Event")
-
     # Initialize form stats
     if "event_title" not in st.session_state:
         st.session_state["event_title"] = ""
