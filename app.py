@@ -5,7 +5,7 @@ import utils.render_calendar as rc
 # App config
 st.set_page_config(
     page_title = "Weekly Schedule Builder",
-    page_icon=":material/calendar_today:",
+    page_icon="📅",
     layout = "wide"
     )
 st.title("Weekly Schedule Builder")
