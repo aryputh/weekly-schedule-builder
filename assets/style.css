@@ -53,11 +53,14 @@
     position: absolute;
     left: 4px;
     right: 4px;
+    top: 0;
+    height: auto;
     border-radius: 4px;
     color: #FFFFFF;
     font-size: 13px;
     padding: 2px 4px;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .event-title {

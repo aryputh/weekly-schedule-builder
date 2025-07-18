@@ -1,6 +1,9 @@
 from datetime import datetime
 
 def render_calendar(events, visible_days, start_hour, end_hour, time_format):
+    # Vertical spacing
+    padding_px = 2
+
     hour_height_px = 60
     day_height_px = hour_height_px * (end_hour.hour - start_hour.hour)
     column_width = f"{100 / len(visible_days)}%"
@@ -30,10 +33,9 @@ def render_calendar(events, visible_days, start_hour, end_hour, time_format):
             start_offset = (start_time.hour + start_time.minute / 60) - start_hour.hour
             duration = (end_time - start_time).seconds / 3600
 
-            top_px = start_offset * hour_height_px
-            height_px = duration * hour_height_px
+            top_px = start_offset * hour_height_px + padding_px
+            height_px = duration * hour_height_px - (padding_px * 2)
 
-            # events_html += f"""
             events_html += (
                 '<div class = "event" style = "'
                 f'top: {top_px}px;'
@@ -43,7 +45,6 @@ def render_calendar(events, visible_days, start_hour, end_hour, time_format):
                 '</div>'
             )
 
-        # day_columns_html += f"""
         day_columns_html += (
             f'<div class = "day-column" style = "width" {column_width};">'
             f'<div class = "day-header">{day}</div>'
