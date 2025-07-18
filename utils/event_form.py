@@ -8,15 +8,15 @@ COLOR_PALETTE = [
 ]
 
 def render_event_form(time_format, start_hour, end_hour, days_options):
-    # Main Area: Event Input
     st.subheader("Add a New Event")
 
     # Initialize form stats
-    form_keys = ["event_title", "event_description", "event_days"]
-    for key in form_keys:
-        if key not in st.session_state:
-            st.session_state[key] = "" if key != "event_days" else []
-    
+    if "event_title" not in st.session_state:
+        st.session_state["event_title"] = ""
+    if "event_description" not in st.session_state:
+        st.session_state["event_description"] = ""
+    if "event_days" not in st.session_state:
+        st.session_state["event_days"] = []
     if "event_color" not in st.session_state:
         st.session_state["event_color"] = random.choice(COLOR_PALETTE)
 
@@ -31,7 +31,7 @@ def render_event_form(time_format, start_hour, end_hour, days_options):
         with col2:
             start_time = tu.get_time_from_inputs(col2, "Start Time", start_hour.hour, time_format, "event_start", True)
             end_time = tu.get_time_from_inputs(col2, "End Time", end_hour.hour, time_format, "event_end", True)
-            color = st.color_picker("Color *", "#FF5733")
+            color = st.color_picker("Color *", value = st.session_state["event_color"], key = "event_color")
 
         submitted = st.form_submit_button("Add Event")
 
