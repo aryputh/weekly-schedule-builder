@@ -19,7 +19,7 @@ days_options = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
 if "day_toggles" not in st.session_state:
     st.session_state.day_toggles = {day: day in ["MON", "TUE", "WED", "THU", "FRI"] for day in days_options}
 
-st.sidebar.subheader("Visible Days")
+st.sidebar.subheader("Day Settings")
 cols = st.sidebar.columns(2)
 
 for i, day in enumerate(days_options):
@@ -29,6 +29,7 @@ for i, day in enumerate(days_options):
 visible_days = [day for day, selected in st.session_state.day_toggles.items() if selected]
 
 # Time format selection
+st.sidebar.subheader("Time Settings")
 time_format = st.sidebar.radio("Time Format", ["12-hour", "24-hour"])
 
 def get_sidebar_time(label, default_hour, key_prefix):
