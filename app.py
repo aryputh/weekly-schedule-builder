@@ -40,15 +40,21 @@ if start_hour >= end_hour:
     st.sidebar.error("Start time must be before end time.")
 
 # Main Area: Event Input
-st.subheader("+ Add New Event")
+st.subheader("Add a New Event")
 
-with st.form("event_form", clear_on_submit = True):
+# Initialize form stats
+form_keys = ["event_title", "event_description", "event_days"]
+for key in form_keys:
+    if key not in st.session_state:
+        st.session_state[key] = "" if key != "event_days" else []
+
+with st.form("event_form", clear_on_submit = False):
     col1, col2 = st.columns(2)
 
     with col1:
-        title = st.text_input("Event Title")
-        description = st.text_area("Description", height = 100)
-        selected_days = st.multiselect("Days", options = visible_days)
+        title = st.text_input("Event Title", value = st.session_state["event_title"], key = "event_title")
+        description = st.text_area("Description", height = 100, value = st.session_state["event_description"], key = "event_description")
+        selected_days = st.multiselect("Days", options = visible_days, default = st.session_state["event_days"], key = "event_days")
 
     with col2:
         start_time = get_time_from_inputs(col2, "Start Time", start_hour.hour, time_format, "event_start")
@@ -77,9 +83,14 @@ with st.form("event_form", clear_on_submit = True):
                     "end_time" : str(end_time),
                     "color" : color
                 }
-
                 st.session_state["events"].append(event)
+
             st.success(f"Event '{title}' added to: {', '.join(selected_days)}")
+
+            # Clear fields on success
+            st.session_state["event_title"] = ""
+            st.session_state["event_description"] = ""
+            st.session_state["event_days"] = []
 
 # Display saved events (for now)
 st.subheader("Current Events")
