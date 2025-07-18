@@ -31,7 +31,7 @@ def render_event_form(time_format, start_hour, end_hour, days_options):
         with col2:
             start_time = tu.get_time_from_inputs(col2, "Start Time", start_hour.hour, time_format, "event_start", True)
             end_time = tu.get_time_from_inputs(col2, "End Time", end_hour.hour, time_format, "event_end", True)
-            color = st.color_picker("Color *", value = st.session_state["event_color_next"], key = "event_color")
+            current_color = st.color_picker("Color *", value = st.session_state["event_color_next"], key = "event_color")
 
         submitted = st.form_submit_button("Add Event")
 
@@ -55,7 +55,7 @@ def render_event_form(time_format, start_hour, end_hour, days_options):
                         "day" : day,
                         "start_time" : start_time.strftime("%H:%M"),
                         "end_time" : end_time.strftime("%H:%M"),
-                        "color" : color,
+                        "color" : current_color,
                     }
                     st.session_state["events"].append(event)
 
