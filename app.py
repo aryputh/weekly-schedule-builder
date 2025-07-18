@@ -24,7 +24,7 @@ def chunk(lst, n):
     return [lst[i:i + n] for i in range(0, len(lst), n)]
 
 st.sidebar.subheader("Visible Days")
-days_per_row = 3
+days_per_row = 2
 cols = st.sidebar.columns(len(days_options))
 
 day_chunks = chunk(days_options, days_per_row)
