@@ -13,11 +13,11 @@ if "events" not in st.session_state:
 st.sidebar.header("Calendar Settings")
 
 # Days of the week
-days_options = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+days_options = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
 
 # Initialize day selection toggles
 if "day_toggles" not in st.session_state:
-    st.session_state.day_toggles = {day: day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] for day in days_options}
+    st.session_state.day_toggles = {day: day in ["MON", "TUE", "WED", "THU", "FRI"] for day in days_options}
 
 st.sidebar.subheader("Visible Days")
 cols = st.sidebar.columns(len(days_options))
