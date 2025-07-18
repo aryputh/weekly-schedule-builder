@@ -1,5 +1,5 @@
 import streamlit as st
-from datetime import time
+from utils.time_utils import get_time_from_inputs
 
 # App config
 st.set_page_config(page_title = "Weekly Schedule Builder", layout = "wide")
@@ -32,44 +32,9 @@ visible_days = [day for day, selected in st.session_state.day_toggles.items() if
 st.sidebar.subheader("Time Settings")
 time_format = st.sidebar.radio("Time Format", ["12-hour", "24-hour"])
 
-def get_sidebar_time(label, default_hour, key_prefix):
-    if time_format == "12-hour":
-        # Convert 24h to 12h + meridiem
-        if default_hour == 0:
-            default_12 = 12
-            default_meridiem = "AM"
-        elif 1 <= default_hour <= 11:
-            default_12 = default_hour
-            default_meridiem = "AM"
-        elif default_hour == 12:
-            default_12 = 12
-            default_meridiem = "PM"
-        else:
-            default_12 = default_hour - 12
-            default_meridiem = "PM"
-
-        hour = st.sidebar.number_input(
-            f"{label} Hour (1-12)", min_value = 1, max_value = 12, value = default_12, key = f"{key_prefix}_hour"
-        )
-        meridiem = st.sidebar.radio(
-            f"{label} AM/PM", options = ["AM", "PM"], index = 0 if default_meridiem == "AM" else 1, key = f"{key_prefix}_ampm"
-            )
-
-        if meridiem == "AM" and hour == 12:
-            conv_hour = 0
-        elif meridiem == "PM" and hour != 12:
-            conv_hour = hour + 12
-        else:
-            conv_hour = hour
-    else:
-        conv_hour = st.sidebar.number_input(
-            f"{label} Hour (0-23)", min_value = 0, max_value = 23, value = default_hour, key = f"{key_prefix}_hour"
-        )
-    return time(conv_hour, 0)
-
 # Let user select times using time input
-start_hour = get_sidebar_time("Start", default_hour = 8, key_prefix = "start")
-end_hour = get_sidebar_time("End", default_hour = 18, key_prefix = "end")
+start_hour = get_time_from_inputs(st.sidebar, "Start", 8, time_format, "start")
+end_hour = get_time_from_inputs(st.sidebar, "End", 18, time_format, "end")
 
 if start_hour >= end_hour:
     st.sidebar.error("Start time must be before end time.")
@@ -86,8 +51,8 @@ with st.form("event_form", clear_on_submit = True):
         selected_days = st.multiselect("Days", options = visible_days)
 
     with col2:
-        start_time = st.time_input("Start Time", value = start_hour)
-        end_time = st.time_input("End Time", value = end_hour)
+        start_time = get_time_from_inputs(col2, "Start Time", start_hour.hour, time_format, "event_start")
+        end_time = get_time_from_inputs(col2, "End Time", end_hour.hour, time_format, "event_end")
         color = st.color_picker("Color", "#FF5733")
 
     submitted = st.form_submit_button("Add Event")
@@ -96,7 +61,10 @@ with st.form("event_form", clear_on_submit = True):
         if not selected_days:
             st.warning("Please select at least one day.")
         elif start_time < start_hour or end_time > end_hour:
-            st.warning(f"Times must be between {start_hour} and {end_hour}.")
+            st.warning(
+                f"Times must be between {start_hour.strftime("%I:%M %p" if time_format == "12-hour" else "%H:%M")}\
+                      and {end_hour.strftime("%I:%M %p" if time_format == "12-hour" else "%H:%M")}."
+                )
         elif start_time >= end_time:
             st.warning("Start time must be before end time.")
         else:
