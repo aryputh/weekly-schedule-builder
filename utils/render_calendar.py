@@ -35,11 +35,14 @@ def render_calendar(events, visible_days, start_hour, end_hour, time_format):
             start_offset = (start_time.hour + start_time.minute / 60) - start_hour.hour
             duration = (end_time - start_time).seconds / 3600
 
+            top_px = start_offset * vertical_hour_height_px + vertical_event_padding_px
             height_px = duration * vertical_hour_height_px - (vertical_event_padding_px * 2)
 
             events_html += (
                 '<div class = "event" style = "'
-                f'top: {horizontal_event_padding_px}px;'
+                f'left: {horizontal_event_padding_px}px;'
+                f'right: {horizontal_event_padding_px}px;'
+                f'top: {top_px}px;'
                 f'height: {height_px}px;'
                 f'background-color: {event["color"]};">'
                 f'<div class = "event-title">{event["title"]}</div>'

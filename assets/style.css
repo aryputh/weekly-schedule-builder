@@ -51,8 +51,8 @@
 
 .event {
     position: absolute;
-    left: 4px;
-    right: 4px;
+    left: 4px; /* Fallback value */
+    right: 4px; /* Fallback value */
     border-radius: 4px;
     color: #FFFFFF;
     font-size: 13px;
