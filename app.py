@@ -32,7 +32,7 @@ with st.form("event_form", clear_on_submit = True):
     with col1:
         title = st.text_input("Event Title")
         description = st.text_area("Description", height = 100)
-        day = st.selectbox("Day", options = visible_days)
+        selected_days = st.multiselect("Days", options = visible_days)
 
     with col2:
         start_time = st.time_input("Start Time", value = time(9, 0))
@@ -42,19 +42,22 @@ with st.form("event_form", clear_on_submit = True):
     submitted = st.form_submit_button("Add Event")
 
     if submitted:
-        if start_time >= end_time:
+        if not selected_days:
+            st.warning("Please select at least one day.")
+        elif start_time >= end_time:
             st.warning("End time must be after start time.")
         else:
-            event = {
-                "title" : title,
-                "description" : description,
-                "day" : day,
-                "start_time" : str(start_time),
-                "end_time" : str(end_time),
-                "color" : color
-            }
+            for day in selected_days:
+                event = {
+                    "title" : title,
+                    "description" : description,
+                    "day" : day,
+                    "start_time" : str(start_time),
+                    "end_time" : str(end_time),
+                    "color" : color
+                }
 
-            st.session_state["events"].append(event)
+                st.session_state["events"].append(event)
             st.success(f"Event '{title}' added to {day}.")
 
 # Display saved events (for now)
