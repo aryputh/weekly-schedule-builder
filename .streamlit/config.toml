@@ -3,6 +3,3 @@ headless = true
 
 [client]
 showSidebarNavigation = false
-
-[ui]
-pageTitle = "Weekly Schedule Builder"
