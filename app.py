@@ -81,7 +81,7 @@ with st.form("event_form", clear_on_submit = False):
     submitted = st.form_submit_button("Add Event")
 
     if submitted:
-        if not title:
+        if not title or title.isspace():
             st.warning("Please title your event.")
         elif not selected_days:
             st.warning("Please select at least one day.")
