@@ -31,7 +31,7 @@ day_chunks = chunk(days_options, days_per_row)
 
 for row in day_chunks:
     cols = st.sidebar.columns(len(row))
-    for i, day in enumerate(days_options):
+    for i, day in enumerate(row):
         if cols[i].button(day, use_container_width = True):
             st.session_state.day_toggles[day] = not st.session_state.day_toggles[day]
 
