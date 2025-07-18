@@ -34,10 +34,26 @@ time_format = st.sidebar.radio("Time Format", ["12-hour", "24-hour"])
 
 def get_sidebar_time(label, default_hour, key_prefix):
     if time_format == "12-hour":
+        # Convert 24h to 12h + meridiem
+        if default_hour == 0:
+            default_12 = 12
+            default_meridiem = "AM"
+        elif 1 <= default_hour <= 11:
+            default_12 = default_hour
+            default_meridiem = "AM"
+        elif default_hour == 12:
+            default_12 = 12
+            default_meridiem = "PM"
+        else:
+            default_12 = default_hour - 12
+            default_meridiem = "PM"
+
         hour = st.sidebar.number_input(
-            f"{label} Hour (1-12)", min_value = 1, max_value = 12, value = default_hour % 12 or 12, key = f"{key_prefix}_hour"
+            f"{label} Hour (1-12)", min_value = 1, max_value = 12, value = default_12, key = f"{key_prefix}_hour"
         )
-        meridiem = st.sidebar.radio(f"{label} AM/PM", options = ["AM", "PM"], key = f"{key_prefix}_ampm")
+        meridiem = st.sidebar.radio(
+            f"{label} AM/PM", options = ["AM", "PM"], index = 0 if default_meridiem == "AM" else 1, key = f"{key_prefix}_ampm"
+            )
 
         if meridiem == "AM" and hour == 12:
             conv_hour = 0
@@ -80,7 +96,7 @@ with st.form("event_form", clear_on_submit = True):
         if not selected_days:
             st.warning("Please select at least one day.")
         elif start_time < start_hour or end_time > end_hour:
-            st.warning(f"Times must be between {format_time_label(start_hour)} and {format_time_label(end_hour)}.")
+            st.warning(f"Times must be between {start_hour} and {end_hour}.")
         elif start_time >= end_time:
             st.warning("Start time must be before end time.")
         else:
