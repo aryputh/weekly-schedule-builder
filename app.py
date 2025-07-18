@@ -23,6 +23,19 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# Set app view container
+st.markdown(
+    """
+    <style>
+    [data-testid="stAppViewContainer"] .main {
+        padding-left: 0rem;
+        padding-right: 0rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 # Initialize session state
 if "events" not in st.session_state:
     st.session_state["events"] = []
