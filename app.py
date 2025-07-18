@@ -87,14 +87,6 @@ with st.form("event_form", clear_on_submit = False):
 
             st.success(f"Event '{title}' added to: {', '.join(selected_days)}")
 
-            # Clear fields on success
-            st.session_state.update({
-                "event_title": "",
-                "event_description": "",
-                "event_days": [],
-            })
-            st.experimental_rerun()
-
 # Display saved events (for now)
 st.subheader("Current Events")
 
