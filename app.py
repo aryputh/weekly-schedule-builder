@@ -41,15 +41,6 @@ for i, day in enumerate(days_options):
 
 visible_days = [day for day, selected in st.session_state.day_toggles.items() if selected]
 
-# Tracks previous visible days
-if "prev_visible_days" not in st.session_state:
-    st.session_state.prev_visible_days = visible_days.copy()
-
-# Update event_days if visible_days has changed
-if st.session_state.prev_visible_days != visible_days:
-    st.session_state["event_days"] = visible_days.copy()
-    st.session_state.prev_visible_days = visible_days.copy()
-
 # Time format selection
 st.sidebar.subheader("Time Settings")
 time_format = st.sidebar.radio("Time Format", ["12-hour", "24-hour"], horizontal = True)
@@ -76,7 +67,7 @@ with st.form("event_form", clear_on_submit = False):
     with col1:
         title = st.text_input("Event Title *", value = st.session_state["event_title"], key = "event_title")
         description = st.text_area("Description", height = 100, value = st.session_state["event_description"], key = "event_description")
-        selected_days = st.multiselect("Days *", options = visible_days, key = "event_days")
+        selected_days = st.multiselect("Days *", options = days_options, key = "event_days")
 
     with col2:
         start_time = tu.get_time_from_inputs(col2, "Start Time", start_hour.hour, time_format, "event_start", True)
