@@ -60,19 +60,13 @@ for key in form_keys:
     if key not in st.session_state:
         st.session_state[key] = "" if key != "event_days" else []
 
-# Track perviously visible days
-if "prev_visible_days" not in st.session_state:
-    st.session_state.prev_visible_days = visible_days
-
-# Remove only deselected days from form input
-removed_days = set(st.session_state.prev_visible_days) - set(visible_days)
-if removed_days:
+# Clean up selected event days
+if "event_days" in st.session_state:
     st.session_state["event_days"] = [
-        day for day in st.session_state["event_days"] if day not in removed_days
+        day for day in st.session_state["event_days"] if day in visible_days
     ]
-
-# Update previous visible days tracker
-st.session_state.prev_visible_days = visible_days
+else:
+    st.session_state["event_days"] = []
 
 with st.form("event_form", clear_on_submit = False):
     col1, col2 = st.columns(2)
