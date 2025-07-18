@@ -3,7 +3,7 @@ from datetime import datetime
 def render_calendar(events, visible_days, start_hour, end_hour, time_format):
     # Vertical spacing for events
     vertical_event_padding_px = 4
-    horizontal_event_padding_px = 2
+    horizontal_event_padding_px = 4
 
     # Height of hour rows
     vertical_hour_height_px = 60
