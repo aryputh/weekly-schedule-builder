@@ -5,6 +5,7 @@
 }
 
 .time-column {
+    padding-top: 30px;
     width: 60px;
     border-right: 1px solid #CCCCCC;
     background: #F8F8F8;
@@ -32,6 +33,8 @@
 }
 
 .day-header {
+    height: 30px;
+    line-height: 30px;
     text-align: center;
     font-weight: bold;
     background: #F0F0F0;
@@ -41,6 +44,8 @@
 
 .day-body {
     position: relative;
+    height: auto;
+    padding-top: 0px;
 }
 
 .event {
