@@ -27,14 +27,6 @@ def render_calendar(events, visible_days, start_hour, end_hour, time_format):
             height_px = duration * hour_height_px
 
             # events_html += f"""
-            # <div class = "event" style = "
-            #     top: {top_px}px;
-            #     height: {height_px}px;
-            #     background-color: {event['color']};
-            # ">
-            #     <div class = "event_title">{event['title']}</div>
-            # </div>
-            # """
             events_html += (
                 '<div class = "event" style = "'
                 f'top: {top_px}px;'
@@ -45,11 +37,6 @@ def render_calendar(events, visible_days, start_hour, end_hour, time_format):
             )
 
         # day_columns_html += f"""
-        # <div class = "day-column" style = "width: {column_width};">
-        #     <div class = "day-header">{day}</div>
-        #     <div class = "day-body">{events_html}</div>
-        # </div>
-        # """
         day_columns_html += (
             f'<div class = "day-column" style = "width" {column_width};">'
             f'<div class = "day-header">{day}</div>'
@@ -58,12 +45,6 @@ def render_calendar(events, visible_days, start_hour, end_hour, time_format):
         )
 
     # Combine everything into one grid
-    # calendar_html = f"""
-    # <div class = "calendar-container">
-    #     <div class = "time-column">{time_labels_html}</div>
-    #     <div class = "days-container">{day_columns_html}</div>
-    # </div>
-    # """
     calendar_html = (
         '<div class = "calendar-container">'
         f'<div class = "time-column">{time_labels_html}</div>'
