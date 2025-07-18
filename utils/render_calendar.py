@@ -2,6 +2,7 @@ from datetime import datetime
 
 def render_calendar(events, visible_days, start_hour, end_hour, time_format):
     hour_height_px = 60
+    day_height_px = hour_height_px * (end_hour.hour - start_hour.hour)
     column_width = f"{100 / len(visible_days)}%"
 
     # Generate time labels (left sidebar)
@@ -40,7 +41,7 @@ def render_calendar(events, visible_days, start_hour, end_hour, time_format):
         day_columns_html += (
             f'<div class = "day-column" style = "width" {column_width};">'
             f'<div class = "day-header">{day}</div>'
-            f'<div class = "day-body">{events_html}</div>'
+            f'<div class = "day-body" style = "height: {day_height_px}px;">{events_html}</div>'
             '</div>'
         )
 

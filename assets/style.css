@@ -41,7 +41,6 @@
 
 .day-body {
     position: relative;
-    height: calc(60px * 12); /* 12 hours * 60px */
 }
 
 .event {
