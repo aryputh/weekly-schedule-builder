@@ -5,6 +5,18 @@ from utils.time_utils import *
 st.set_page_config(page_title = "Weekly Schedule Builder", layout = "wide")
 st.title("Weekly Schedule Builder - MVP")
 
+# Set minimum sidebar width
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"] {
+        min-width: 400px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 # Initialize session state
 if "events" not in st.session_state:
     st.session_state["events"] = []

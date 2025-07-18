@@ -24,7 +24,8 @@ def get_time_from_inputs(container, label, default_hour, time_format, key_prefix
             f"{label} Hour (1-12)", min_value = 1, max_value = 12, value = default_12, key = f"{key_prefix}_hour"
         )
         meridiem = col2.radio(
-            f"{label} AM/PM", options = ["AM", "PM"], index = 0 if default_meridiem == "AM" else 1, key = f"{key_prefix}_ampm", horizontal = True, label_visibility = "hidden"
+            f"{label} AM/PM", options = ["AM", "PM"], index = 0 if default_meridiem == "AM" else 1,
+            key = f"{key_prefix}_ampm", horizontal = True, label_visibility = "hidden"
             )
 
         if meridiem == "AM" and hour == 12:
