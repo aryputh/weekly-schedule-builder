@@ -63,10 +63,13 @@ for key in form_keys:
 with st.form("event_form", clear_on_submit = False):
     col1, col2 = st.columns(2)
 
+    valid_selected_days = [day for day in st.session_state["event_days"] if day in visible_days]
+    st.session_state["event_days"] = valid_selected_days
+
     with col1:
         title = st.text_input("Event Title *", value = st.session_state["event_title"], key = "event_title")
         description = st.text_area("Description", height = 100, value = st.session_state["event_description"], key = "event_description")
-        selected_days = st.multiselect("Days *", options = visible_days, default = st.session_state["event_days"], key = "event_days")
+        selected_days = st.multiselect("Days *", options = visible_days, default = valid_selected_days, key = "event_days")
 
     with col2:
         start_time = get_time_from_inputs(col2, "Start Time", start_hour.hour, time_format, "event_start", True)
