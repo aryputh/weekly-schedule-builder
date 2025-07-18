@@ -1,5 +1,5 @@
 import streamlit as st
-from datetime import time
+from datetime import datetime, time
 
 # App config
 st.set_page_config(page_title = "Weekly Schedule Builder", layout = "wide")
@@ -28,12 +28,23 @@ for i, day in enumerate(days_options):
 
 visible_days = [day for day, selected in st.session_state.day_toggles.items() if selected]
 
-# Time range
-start_hour = st.sidebar.slider("Start Hour", 0, 23, 8)
-end_hour = st.sidebar.slider("End Hour", 1, 24, 18)
-
-# Time format
+# Time format selection
 time_format = st.sidebar.radio("Time Format", ["12-hour", "24-hour"])
+
+# Time input helper
+def format_time_label(t: time) -> str:
+    return t.strftime("%I:%M %p") if time_format == "12-hour" else t.strftime("%H:%M")
+
+# Default start and end times
+default_start = time(8, 0)
+default_end = time(18, 0)
+
+# Let user select times using time input
+start_hour = st.sidebar.time_input("Start Time", default_start, step = 1800)
+end_hour = st.sidebar.time_input("End Time", default_end, step = 1800)
+
+if start_hour >= end_hour:
+    st.sidebar.error("Start time must be before end time.")
 
 # Main Area: Event Input
 st.subheader("+ Add New Event")
@@ -47,8 +58,8 @@ with st.form("event_form", clear_on_submit = True):
         selected_days = st.multiselect("Days", options = visible_days)
 
     with col2:
-        start_time = st.time_input("Start Time", value = time(9, 0))
-        end_time = st.time_input("End Time", value = time(10, 0))
+        start_time = st.time_input("Start Time", value = start_hour)
+        end_time = st.time_input("End Time", value = end_hour)
         color = st.color_picker("Color", "#FF5733")
 
     submitted = st.form_submit_button("Add Event")
@@ -56,8 +67,10 @@ with st.form("event_form", clear_on_submit = True):
     if submitted:
         if not selected_days:
             st.warning("Please select at least one day.")
+        elif start_time < start_hour or end_time > end_hour:
+            st.warning(f"Times must be between {format_time_label(start_hour)} and {format_time_label(end_hour)}.")
         elif start_time >= end_time:
-            st.warning("End time must be after start time.")
+            st.warning("Start time must be before end time.")
         else:
             for day in selected_days:
                 event = {
@@ -70,7 +83,7 @@ with st.form("event_form", clear_on_submit = True):
                 }
 
                 st.session_state["events"].append(event)
-            st.success(f"Event '{title}' added to {day}.")
+            st.success(f"Event '{title}' added to: {', '.join(selected_days)}")
 
 # Display saved events (for now)
 st.subheader("Current Events")
