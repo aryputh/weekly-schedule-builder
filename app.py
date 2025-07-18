@@ -3,7 +3,7 @@ from utils.time_utils import *
 
 # App config
 st.set_page_config(page_title = "Weekly Schedule Builder", layout = "wide")
-st.title("Weekly Schedule Builder - MVP")
+st.title("Weekly Schedule Builder")
 
 # Set minimum sidebar width
 st.markdown(
@@ -39,14 +39,7 @@ for i, day in enumerate(days_options):
     st.session_state.day_toggles[day] = col.toggle(day, value = st.session_state.day_toggles.get(day, False))
 
 visible_days = [day for day, selected in st.session_state.day_toggles.items() if selected]
-
-# Clean up selected event days
-if "event_days" not in st.session_state:
-    st.session_state["event_days"] = []
-elif st.session_state["event_days"]:
-    st.session_state["event_days"] = [
-        day for day in st.session_state["event_days"] if day in visible_days
-    ]
+st.session_state["event_days"] = visible_days.copy()
 
 # Time format selection
 st.sidebar.subheader("Time Settings")
