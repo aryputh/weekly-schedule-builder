@@ -1,5 +1,5 @@
 import streamlit as st
-from datetime import datetime, time
+from datetime import time
 
 # App config
 st.set_page_config(page_title = "Weekly Schedule Builder", layout = "wide")
@@ -31,17 +31,28 @@ visible_days = [day for day, selected in st.session_state.day_toggles.items() if
 # Time format selection
 time_format = st.sidebar.radio("Time Format", ["12-hour", "24-hour"])
 
-# Time input helper
-def format_time_label(t: time) -> str:
-    return t.strftime("%I:%M %p") if time_format == "12-hour" else t.strftime("%H:%M")
+def get_sidebar_time(label, default_hour, key_prefix):
+    if time_format == "12-hour":
+        hour = st.sidebar.number_input(
+            f"{label} Hour (1-12)", min_value = 1, max_value = 12, value = default_hour % 12 or 12, key = f"{key_prefix}_hour"
+        )
+        meridiem = st.sidebar.radio(f"{label} AM/PM", options = ["AM", "PM"], key = f"{key_prefix}_ampm")
 
-# Default start and end times
-default_start = time(8, 0)
-default_end = time(18, 0)
+        if meridiem == "AM" and hour == 12:
+            conv_hour = 0
+        elif meridiem == "PM" and hour != 12:
+            conv_hour = hour + 12
+        else:
+            conv_hour = hour
+    else:
+        conv_hour = st.sidebar.number_input(
+            f"{label} Hour (0-23)", min_value = 0, max_value = 23, value = default_hour, key = f"{key_prefix}_hour"
+        )
+    return time(conv_hour, 0)
 
 # Let user select times using time input
-start_hour = st.sidebar.time_input("Start Time", default_start, step = 1800)
-end_hour = st.sidebar.time_input("End Time", default_end, step = 1800)
+start_hour = get_sidebar_time("Start", default_hour = 8, key_prefix = "start")
+end_hour = get_sidebar_time("End", default_hour = 18, key_prefix = "end")
 
 if start_hour >= end_hour:
     st.sidebar.error("Start time must be before end time.")
