@@ -14,7 +14,19 @@ st.sidebar.header("Calendar Settings")
 
 # Days of the week
 days_options = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-visible_days = st.sidebar.multiselect("Select Days to Show", options = days_options, default = days_options[1:6])
+
+# Initialize day selection toggles
+if "day_toggles" not in st.session_state:
+    st.session_state.day_toggles = {day: day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] for day in days_options}
+
+st.sidebar.subheader("Visible Days")
+cols = st.sidebar.columns(len(days_options))
+
+for i, day in enumerate(days_options):
+    if cols[i].button(day, use_container_width = True):
+        st.session_state.day_toggles[day] = not st.session_state.day_toggles[day]
+
+visible_days = [day for day, selected in st.session_state.day_toggles.items() if selected]
 
 # Time range
 start_hour = st.sidebar.slider("Start Hour", 0, 23, 8)
