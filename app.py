@@ -67,7 +67,7 @@ with st.form("event_form", clear_on_submit = False):
     with col1:
         title = st.text_input("Event Title *", value = st.session_state["event_title"], key = "event_title")
         description = st.text_area("Description", height = 100, value = st.session_state["event_description"], key = "event_description")
-        selected_days = st.multiselect("Days *", options = visible_days, default = st.session_state["event_days"], key = "event_days")
+        selected_days = st.multiselect("Days *", options = visible_days, key = "event_days")
 
     with col2:
         start_time = tu.get_time_from_inputs(col2, "Start Time", start_hour.hour, time_format, "event_start", True)
