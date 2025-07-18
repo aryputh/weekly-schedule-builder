@@ -27,7 +27,7 @@ time_format = st.sidebar.radio("Time Format", ["12-hour", "24-hour"])
 st.subheader("+ Add New Event")
 
 with st.form("event_form", clear_on_submit = True):
-    col1, col2 = st.colums(2)
+    col1, col2 = st.columns(2)
 
     with col1:
         title = st.text_input("Event Title")
