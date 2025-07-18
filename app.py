@@ -61,12 +61,12 @@ for key in form_keys:
         st.session_state[key] = "" if key != "event_days" else []
 
 # Clean up selected event days
-if "event_days" in st.session_state:
+if "event_days" not in st.session_state:
+    st.session_state["event_days"] = []
+elif st.session_state["event_days"]:
     st.session_state["event_days"] = [
         day for day in st.session_state["event_days"] if day in visible_days
     ]
-else:
-    st.session_state["event_days"] = []
 
 with st.form("event_form", clear_on_submit = False):
     col1, col2 = st.columns(2)
